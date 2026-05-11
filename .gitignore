@@ -1,3 +1,6 @@
+# Environment / secrets
+.env
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -216,3 +219,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data files
+data/raw/*.csv
+data/raw/*.zip
+data/bronze/
+data/silver/
+data/gold/
+logs/*.log
+
+# Power BI
+*.pbix
+
+skeleton.txt

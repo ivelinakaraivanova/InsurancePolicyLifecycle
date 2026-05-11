@@ -1,0 +1,70 @@
+# Insurance Policy Lifecycle — Docker Compose
+# Ports differ from the shared containers (OnlineRetailTransactions) to avoid conflicts:
+#   postgres  → 5433  (shared uses 5432)
+#   spark     → 8889  (shared uses 8888)
+#   airflow   → 8081  (shared uses 8080)
+
+services:
+
+  # ── PostgreSQL ──────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres
+    container_name: insurance-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5433:5432"
+    volumes:
+      - insurance-postgres-data:/var/lib/postgresql
+    networks:
+      - insurance-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+
+  # ── PySpark / JupyterLab ────────────────────────────────────────────────────
+  spark:
+    image: jupyter/pyspark-notebook
+    container_name: insurance-spark
+    ports:
+      - "8889:8888"
+    volumes:
+      - .:/home/jovyan/work          # project root → /home/jovyan/work
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+    networks:
+      - insurance-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ── Airflow (standalone — db init + webserver + scheduler in one) ───────────
+  airflow:
+    image: apache/airflow
+    container_name: insurance-airflow
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/airflow.db
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./src/airflow:/opt/airflow/dags          # DAG folder
+      - .:/opt/airflow/project                   # full project accessible at /opt/airflow/project
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - insurance-net
+    command: standalone
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  insurance-postgres-data:
+
+networks:
+  insurance-net:
+    driver: bridge
