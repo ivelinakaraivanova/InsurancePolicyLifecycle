@@ -2,3 +2,4 @@ pyspark
 psycopg2-binary
 pandas
 jupyter
+python-dotenv
