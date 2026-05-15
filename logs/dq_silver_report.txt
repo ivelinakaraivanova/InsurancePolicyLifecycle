@@ -1,0 +1,29 @@
+CHECK                COLUMN                              ISSUE                         ROWS       %  STATUS
+------------------------------------------------------------------------------------------------------------
+completeness         sex                                 null values                      0    0.00  PASS
+completeness         insr_begin                          null values                      0    0.00  PASS
+completeness         insr_end                            null values                      0    0.00  PASS
+completeness         effective_yr                        null values                      4    0.00  FAIL
+completeness         insr_type                           null values                      0    0.00  PASS
+completeness         insured_value                       null values                342,834   42.85  FAIL
+completeness         premium                             null values                      0    0.00  PASS
+completeness         object_id                           null values                      0    0.00  PASS
+completeness         prod_year                           null values                    169    0.02  FAIL
+completeness         seats_num                           null values                    235    0.03  FAIL
+completeness         carrying_capacity                   null values                197,885   24.73  FAIL
+completeness         type_vehicle                        null values                      0    0.00  PASS
+completeness         ccm_ton                             null values                      8    0.00  FAIL
+completeness         make                                null values                      0    0.00  PASS
+completeness         usage                               null values                      1    0.00  FAIL
+completeness         claim_paid                          null values                      0    0.00  PASS
+completeness         ingested_at                         null values                      0    0.00  PASS
+completeness         policy_duration_days                null values                      0    0.00  PASS
+completeness         vehicle_age                         null values                    169    0.02  FAIL
+completeness         premium_segment                     null values                      0    0.00  PASS
+completeness         value_segment                       null values                      0    0.00  PASS
+uniqueness           object_id + insr_begin + insr_end   duplicate keys                   0    0.00  PASS
+validity             premium                             zero or negative value           0    0.00  PASS
+validity             sex                                 value not in [0, 1, 2]           0    0.00  PASS
+consistency          insr_end vs insr_begin              end date before start date        0    0.00  PASS
+validity             premium_segment                     value not in ['high', 'low', 'medium']        0    0.00  PASS
+validity             value_segment                       value not in ['high', 'low', 'medium', 'unknown']        0    0.00  PASS

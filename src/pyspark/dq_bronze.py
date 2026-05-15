@@ -10,6 +10,9 @@ from utils import get_spark, read_parquet
 from dq_utils import check_nulls, check_duplicates, check_positive, check_allowed_values, check_date_parseable, check_date_order, write_dq_report
 
 
+DATE_FMT = "dd-MMM-yy"
+
+
 def main():
     log = get_logger("dq_bronze")
     spark = get_spark("dq_bronze")
@@ -19,8 +22,6 @@ def main():
     df = read_parquet(spark, BRONZE_POLICIES)
     total = df.count()
     log.info(f"Bronze row count: {total:,}")
-
-    DATE_FMT = "dd-MMM-yy"
 
     findings = []
     findings += check_nulls(df, total)

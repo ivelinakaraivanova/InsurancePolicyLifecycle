@@ -98,11 +98,11 @@ def check_date_parseable(df: DataFrame, col_name: str, fmt: str, total: int) -> 
     }
 
 
-def check_date_order(df: DataFrame, start_col: str, end_col: str, fmt: str, total: int) -> dict:
-    """Check that end date is not before start date."""
-    n = df.filter(
-        F.to_date(F.col(end_col), fmt) < F.to_date(F.col(start_col), fmt)
-    ).count()
+def check_date_order(df: DataFrame, start_col: str, end_col: str, fmt: str | None, total: int) -> dict:
+    """Check that end date is not before start date. Pass fmt=None if columns are already DateType."""
+    start = F.to_date(F.col(start_col), fmt) if fmt else F.col(start_col)
+    end   = F.to_date(F.col(end_col),   fmt) if fmt else F.col(end_col)
+    n = df.filter(end < start).count()
     return {
         "check": "consistency",
         "column": f"{end_col} vs {start_col}",
