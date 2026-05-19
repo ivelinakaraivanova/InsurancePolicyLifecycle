@@ -26,8 +26,8 @@ def main():
 
     df = df_11_14.unionByName(df_14_18)
     df = df.withColumn("ingested_at", current_timestamp())
-    log_row_counts(log, "Combined (Bronze)",   df)
-
+    
+    log_row_counts(log, "Bronze (Combined)", df)
     write_parquet(df, BRONZE_POLICIES)
     log.info(f"Bronze written to: {BRONZE_POLICIES}")
     log.info("raw_to_bronze completed successfully.")

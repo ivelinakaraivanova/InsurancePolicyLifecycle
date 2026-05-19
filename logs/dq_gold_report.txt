@@ -1,0 +1,9 @@
+CHECK                COLUMN                              ISSUE                         ROWS       %  STATUS
+------------------------------------------------------------------------------------------------------------
+completeness         lifecycle_status                    null values                      0    0.00  PASS
+completeness         is_active                           null values                      0    0.00  PASS
+completeness         is_expired                          null values                      0    0.00  PASS
+completeness         renewal_candidate                   null values                      0    0.00  PASS
+completeness         risk_score                          null values                      0    0.00  PASS
+validity             lifecycle_status                    value not in ['active', 'expired', 'future']        0    0.00  PASS
+validity             risk_score                          value not in [0, 1, 2, 3]        0    0.00  PASS
