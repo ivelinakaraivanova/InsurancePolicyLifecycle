@@ -74,7 +74,10 @@ def main():
          .otherwise("high")
     )
 
-    # ── 9. Rename all columns to snake_case ──────────────────────────────────
+    # ── 9. Add Silver processing timestamp ───────────────────────────────────
+    df = df.withColumn("silver_processed_at", F.current_timestamp())
+
+    # ── 10. Rename all columns to snake_case ──────────────────────────────────
     df = df.toDF(*[c.strip().lower().replace(' ', '_') for c in df.columns])
 
     log_row_counts(log, "Silver (output)", df)

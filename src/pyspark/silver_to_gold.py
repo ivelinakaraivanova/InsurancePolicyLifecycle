@@ -50,6 +50,9 @@ def main():
         F.coalesce((F.col("vehicle_age") > 15).cast("int"), F.lit(0))
     )
 
+    # ── 5. Gold processing timestamp ─────────────────────────────────────────
+    df = df.withColumn("gold_processed_at", F.current_timestamp())
+
     log_row_counts(log, "Gold (output)", df)
     write_parquet(df, GOLD_LIFECYCLE)
     log.info(f"Gold written to: {GOLD_LIFECYCLE}")

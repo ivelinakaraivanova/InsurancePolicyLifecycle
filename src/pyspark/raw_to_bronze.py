@@ -25,7 +25,7 @@ def main():
     log_row_counts(log, "motor_data14-2018",   df_14_18)
 
     df = df_11_14.unionByName(df_14_18)
-    df = df.withColumn("ingested_at", current_timestamp())
+    df = df.withColumn("bronze_processed_at", current_timestamp())
     
     log_row_counts(log, "Bronze (Combined)", df)
     write_parquet(df, BRONZE_POLICIES)

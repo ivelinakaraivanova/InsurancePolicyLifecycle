@@ -4,13 +4,12 @@ Gold Data Quality checks for the Insurance Policy Lifecycle pipeline.
 Reads the Gold lifecycle Parquet, runs DQ checks, and writes a plain-text report to logs/dq_gold_report.txt.
 """
 
-from pyspark.sql import functions as F
+#from pyspark.sql import functions as F
 
 from config import GOLD_LIFECYCLE, DQ_REPORT_GOLD
 from logger import get_logger
 from utils import get_spark, read_parquet
-from dq_utils import (check_nulls, check_duplicates, check_positive,
-                        check_allowed_values, check_date_order, write_dq_report)
+from dq_utils import check_nulls, check_allowed_values, write_dq_report
 
 
 GOLD_COLUMNS = ["lifecycle_status", "is_active", "is_expired", "renewal_candidate", "risk_score"]
