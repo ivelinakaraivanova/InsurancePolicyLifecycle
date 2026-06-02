@@ -1,6 +1,9 @@
 # Environment / secrets
 .env
 
+# Power BI theme (local styling only, not part of source)
+dashboards/insurance_theme.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -229,6 +232,6 @@ data/gold/
 logs/*.log
 
 # Power BI
-*.pbix
+#*.pbix
 
 skeleton.txt
