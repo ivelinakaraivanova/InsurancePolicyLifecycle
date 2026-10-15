@@ -1,13 +1,5 @@
 """
 Centralized logging factory for the Insurance Policy Lifecycle pipeline.
-
-Usage:
-    from logger import get_logger
-    log = get_logger("raw_to_bronze")
-    log.info("Starting...")
-
-Each script passes its own name, which becomes both the logger name
-and the log filename (e.g. logs/raw_to_bronze.log).
 """
 
 import logging
